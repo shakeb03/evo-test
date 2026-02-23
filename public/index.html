@@ -127,12 +127,18 @@
       background: #5a5a5a;
     }
   </style>
+  <script>
+    // Apply dark mode before paint to avoid flash
+    if (localStorage.getItem('darkMode') === 'true') {
+      document.documentElement.classList.add('dark-init');
+    }
+  </script>
 </head>
 <body>
   <div class="box">
     <div class="header-row">
       <h1>Sign In</h1>
-      <button class="toggle-btn" id="darkToggle" aria-label="Toggle dark mode">🌙 Dark</button>
+      <button class="toggle-btn" id="darkToggle" aria-label="Toggle dark mode" aria-pressed="false">🌙 Dark</button>
     </div>
     <form id="signin" action="#" method="post">
       <label for="email">Email</label>
@@ -151,15 +157,19 @@
     const toggleBtn = document.getElementById('darkToggle');
     const body = document.body;
 
-    // Restore preference
-    if (localStorage.getItem('darkMode') === 'true') {
-      body.classList.add('dark');
-      toggleBtn.textContent = '☀️ Light';
+    function applyDark(isDark) {
+      body.classList.toggle('dark', isDark);
+      toggleBtn.textContent = isDark ? '\u2600\uFE0F Light' : '\uD83C\uDF19 Dark';
+      toggleBtn.setAttribute('aria-pressed', isDark ? 'true' : 'false');
     }
 
+    // Restore saved preference
+    const savedDark = localStorage.getItem('darkMode') === 'true';
+    applyDark(savedDark);
+
     toggleBtn.addEventListener('click', function() {
-      const isDark = body.classList.toggle('dark');
-      toggleBtn.textContent = isDark ? '☀️ Light' : '🌙 Dark';
+      const isDark = !body.classList.contains('dark');
+      applyDark(isDark);
       localStorage.setItem('darkMode', isDark);
     });
   </script>
