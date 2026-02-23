@@ -16,6 +16,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: background 0.2s, color 0.2s;
+    }
+    body.dark {
+      background: #1a1a1a;
+      color: #e0e0e0;
     }
     .box {
       background: #fff;
@@ -24,18 +29,56 @@
       box-shadow: 0 1px 3px rgba(0,0,0,0.08);
       width: 100%;
       max-width: 320px;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    body.dark .box {
+      background: #2c2c2c;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.4);
+    }
+    .header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
     }
     h1 {
-      margin: 0 0 1.5rem 0;
+      margin: 0;
       font-size: 1.5rem;
       font-weight: 600;
       color: #333;
+    }
+    body.dark h1 {
+      color: #f0f0f0;
+    }
+    .toggle-btn {
+      background: none;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      padding: 0.25rem 0.65rem;
+      font-size: 0.8rem;
+      cursor: pointer;
+      color: #555;
+      width: auto;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .toggle-btn:hover {
+      background: #e8e8e8;
+    }
+    body.dark .toggle-btn {
+      border-color: #666;
+      color: #ccc;
+    }
+    body.dark .toggle-btn:hover {
+      background: #3a3a3a;
     }
     label {
       display: block;
       margin-bottom: 0.25rem;
       font-size: 0.9rem;
       color: #555;
+    }
+    body.dark label {
+      color: #aaa;
     }
     input {
       width: 100%;
@@ -45,13 +88,24 @@
       border-radius: 4px;
       font-size: 1rem;
       background: #fafafa;
+      color: #333;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
     }
     input:focus {
       outline: none;
       border-color: #999;
       background: #fff;
     }
-    button {
+    body.dark input {
+      background: #3a3a3a;
+      border-color: #555;
+      color: #e0e0e0;
+    }
+    body.dark input:focus {
+      border-color: #888;
+      background: #444;
+    }
+    button[type="submit"] {
       width: 100%;
       padding: 0.65rem;
       font-size: 1rem;
@@ -60,15 +114,26 @@
       border: none;
       border-radius: 4px;
       cursor: pointer;
+      transition: background 0.2s, color 0.2s;
     }
-    button:hover {
+    button[type="submit"]:hover {
       background: #d0d0d0;
+    }
+    body.dark button[type="submit"] {
+      background: #4a4a4a;
+      color: #e0e0e0;
+    }
+    body.dark button[type="submit"]:hover {
+      background: #5a5a5a;
     }
   </style>
 </head>
 <body>
   <div class="box">
-    <h1>Sign In</h1>
+    <div class="header-row">
+      <h1>Sign In</h1>
+      <button class="toggle-btn" id="darkToggle" aria-label="Toggle dark mode">🌙 Dark</button>
+    </div>
     <form id="signin" action="#" method="post">
       <label for="email">Email</label>
       <input type="email" id="email" name="email" required placeholder="you@example.com">
@@ -82,6 +147,21 @@
       e.preventDefault();
       alert('Sign in form submitted (no backend).');
     };
+
+    const toggleBtn = document.getElementById('darkToggle');
+    const body = document.body;
+
+    // Restore preference
+    if (localStorage.getItem('darkMode') === 'true') {
+      body.classList.add('dark');
+      toggleBtn.textContent = '☀️ Light';
+    }
+
+    toggleBtn.addEventListener('click', function() {
+      const isDark = body.classList.toggle('dark');
+      toggleBtn.textContent = isDark ? '☀️ Light' : '🌙 Dark';
+      localStorage.setItem('darkMode', isDark);
+    });
   </script>
 </body>
 </html>
