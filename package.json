@@ -1,0 +1,6 @@
+{
+  "name": "evo-test",
+  "version": "1.0.0",
+  "description": "Simple sign-in page",
+  "main": "server.js"
+}

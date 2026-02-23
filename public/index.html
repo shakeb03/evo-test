@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #f5f5f5;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .box {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      width: 100%;
+      max-width: 320px;
+    }
+    h1 {
+      margin: 0 0 1.5rem 0;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #333;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.25rem;
+      font-size: 0.9rem;
+      color: #555;
+    }
+    input {
+      width: 100%;
+      padding: 0.6rem 0.75rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 1rem;
+      background: #fafafa;
+    }
+    input:focus {
+      outline: none;
+      border-color: #999;
+      background: #fff;
+    }
+    button {
+      width: 100%;
+      padding: 0.65rem;
+      font-size: 1rem;
+      background: #e0e0e0;
+      color: #333;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #d0d0d0;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>Sign In</h1>
+    <form id="signin" action="#" method="post">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required placeholder="you@example.com">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required placeholder="••••••••">
+      <button type="submit">Sign In</button>
+    </form>
+  </div>
+  <script>
+    document.getElementById('signin').onsubmit = function(e) {
+      e.preventDefault();
+      alert('Sign in form submitted (no backend).');
+    };
+  </script>
+</body>
+</html>
