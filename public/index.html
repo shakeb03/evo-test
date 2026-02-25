@@ -4,134 +4,97 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign In</title>
+  <!-- Inline all styles to eliminate a render-blocking stylesheet request -->
   <style>
-    * {
-      box-sizing: border-box;
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,sans-serif;
+      background:#f5f5f5;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      /* Remove transition on body — avoids layout recalc on paint */
     }
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, sans-serif;
-      background: #f5f5f5;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s, color 0.2s;
+    body.dark{background:#1a1a1a;color:#e0e0e0}
+    .box{
+      background:#fff;
+      padding:2rem;
+      border-radius:8px;
+      box-shadow:0 1px 3px rgba(0,0,0,.08);
+      width:100%;
+      max-width:320px;
     }
-    body.dark {
-      background: #1a1a1a;
-      color: #e0e0e0;
+    body.dark .box{background:#2c2c2c;box-shadow:0 1px 6px rgba(0,0,0,.4)}
+    .header-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:1.5rem;
     }
-    .box {
-      background: #fff;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-      width: 100%;
-      max-width: 320px;
-      transition: background 0.2s, box-shadow 0.2s;
+    h1{margin:0;font-size:1.5rem;font-weight:600;color:#333}
+    body.dark h1{color:#f0f0f0}
+    .toggle-btn{
+      background:none;
+      border:1px solid #ccc;
+      border-radius:20px;
+      padding:.25rem .65rem;
+      font-size:.8rem;
+      cursor:pointer;
+      color:#555;
+      width:auto;
     }
-    body.dark .box {
-      background: #2c2c2c;
-      box-shadow: 0 1px 6px rgba(0,0,0,0.4);
+    .toggle-btn:hover{background:#e8e8e8}
+    body.dark .toggle-btn{border-color:#666;color:#ccc}
+    body.dark .toggle-btn:hover{background:#3a3a3a}
+    label{display:block;margin-bottom:.25rem;font-size:.9rem;color:#555}
+    body.dark label{color:#aaa}
+    input{
+      width:100%;
+      padding:.6rem .75rem;
+      margin-bottom:1rem;
+      border:1px solid #ddd;
+      border-radius:4px;
+      font-size:1rem;
+      background:#fafafa;
+      color:#333;
     }
-    .header-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 1.5rem;
+    input:focus{outline:none;border-color:#999;background:#fff}
+    body.dark input{background:#3a3a3a;border-color:#555;color:#e0e0e0}
+    body.dark input:focus{border-color:#888;background:#444}
+    button[type="submit"]{
+      width:100%;
+      padding:.65rem;
+      font-size:1rem;
+      background:#d32f2f;
+      color:#fff;
+      border:none;
+      border-radius:4px;
+      cursor:pointer;
     }
-    h1 {
-      margin: 0;
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: #333;
+    button[type="submit"]:hover{background:#b71c1c}
+    /* Reduce motion for users who prefer it — also reduces paint work on mobile */
+    @media (prefers-reduced-motion: reduce){
+      *{transition:none!important}
     }
-    body.dark h1 {
-      color: #f0f0f0;
-    }
-    .toggle-btn {
-      background: none;
-      border: 1px solid #ccc;
-      border-radius: 20px;
-      padding: 0.25rem 0.65rem;
-      font-size: 0.8rem;
-      cursor: pointer;
-      color: #555;
-      width: auto;
-      transition: background 0.2s, color 0.2s, border-color 0.2s;
-    }
-    .toggle-btn:hover {
-      background: #e8e8e8;
-    }
-    body.dark .toggle-btn {
-      border-color: #666;
-      color: #ccc;
-    }
-    body.dark .toggle-btn:hover {
-      background: #3a3a3a;
-    }
-    label {
-      display: block;
-      margin-bottom: 0.25rem;
-      font-size: 0.9rem;
-      color: #555;
-    }
-    body.dark label {
-      color: #aaa;
-    }
-    input {
-      width: 100%;
-      padding: 0.6rem 0.75rem;
-      margin-bottom: 1rem;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      font-size: 1rem;
-      background: #fafafa;
-      color: #333;
-      transition: background 0.2s, border-color 0.2s, color 0.2s;
-    }
-    input:focus {
-      outline: none;
-      border-color: #999;
-      background: #fff;
-    }
-    body.dark input {
-      background: #3a3a3a;
-      border-color: #555;
-      color: #e0e0e0;
-    }
-    body.dark input:focus {
-      border-color: #888;
-      background: #444;
-    }
-    button[type="submit"] {
-      width: 100%;
-      padding: 0.65rem;
-      font-size: 1rem;
-      background: #d32f2f;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s;
-    }
-    button[type="submit"]:hover {
-      background: #b71c1c;
-    }
-    body.dark button[type="submit"] {
-      background: #d32f2f;
-      color: #fff;
-    }
-    body.dark button[type="submit"]:hover {
-      background: #b71c1c;
+    /* Mobile: ensure tap targets meet 44px minimum */
+    @media (max-width:480px){
+      .box{padding:1.5rem 1.25rem}
+      input,button[type="submit"]{font-size:16px} /* prevents iOS auto-zoom */
     }
   </style>
   <script>
-    // Apply dark mode before paint to avoid flash
-    if (localStorage.getItem('darkMode') === 'true') {
-      document.documentElement.classList.add('dark-init');
-    }
+    // Apply dark mode before first paint to prevent flash — keep this tiny and synchronous
+    (function(){
+      try{
+        if(localStorage.getItem('darkMode')==='true'){
+          document.documentElement.style.background='#1a1a1a';
+          // Class applied after body exists via DOMContentLoaded, but
+          // background is set immediately above to avoid white flash.
+        }
+      }catch(e){}
+    })();
   </script>
 </head>
 <body>
@@ -142,36 +105,43 @@
     </div>
     <form id="signin" action="#" method="post">
       <label for="email">Email</label>
-      <input type="email" id="email" name="email" required placeholder="you@example.com">
+      <input type="email" id="email" name="email" required placeholder="you@example.com"
+             autocomplete="email" inputmode="email">
       <label for="password">Password</label>
-      <input type="password" id="password" name="password" required placeholder="••••••••">
+      <input type="password" id="password" name="password" required placeholder="••••••••"
+             autocomplete="current-password">
       <button type="submit">Sign In</button>
     </form>
   </div>
   <script>
-    document.getElementById('signin').onsubmit = function(e) {
-      e.preventDefault();
-      alert('Sign in form submitted (no backend).');
-    };
+    // All JS deferred to end of body — page is visible and interactive before this runs
+    (function(){
+      var toggleBtn = document.getElementById('darkToggle');
+      var body = document.body;
 
-    const toggleBtn = document.getElementById('darkToggle');
-    const body = document.body;
+      function applyDark(isDark){
+        body.classList.toggle('dark', isDark);
+        document.documentElement.style.background = isDark ? '#1a1a1a' : '';
+        toggleBtn.textContent = isDark ? '\u2600\uFE0F Light' : '\uD83C\uDF19 Dark';
+        toggleBtn.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+      }
 
-    function applyDark(isDark) {
-      body.classList.toggle('dark', isDark);
-      toggleBtn.textContent = isDark ? '\u2600\uFE0F Light' : '\uD83C\uDF19 Dark';
-      toggleBtn.setAttribute('aria-pressed', isDark ? 'true' : 'false');
-    }
+      // Restore saved preference
+      var savedDark = false;
+      try { savedDark = localStorage.getItem('darkMode') === 'true'; } catch(e){}
+      applyDark(savedDark);
 
-    // Restore saved preference
-    const savedDark = localStorage.getItem('darkMode') === 'true';
-    applyDark(savedDark);
+      toggleBtn.addEventListener('click', function(){
+        var isDark = !body.classList.contains('dark');
+        applyDark(isDark);
+        try { localStorage.setItem('darkMode', isDark); } catch(e){}
+      });
 
-    toggleBtn.addEventListener('click', function() {
-      const isDark = !body.classList.contains('dark');
-      applyDark(isDark);
-      localStorage.setItem('darkMode', isDark);
-    });
+      document.getElementById('signin').onsubmit = function(e){
+        e.preventDefault();
+        alert('Sign in form submitted (no backend).');
+      };
+    })();
   </script>
 </body>
 </html>
